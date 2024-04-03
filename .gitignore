@@ -1,3 +1,8 @@
+#gba, sav, elf
+*.gba
+*.sav
+*.elf
+
 # Prerequisites
 *.d
 
