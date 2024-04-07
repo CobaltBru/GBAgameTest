@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "tonc.h": "c",
+        "tonc_math.h": "c",
+        "tonc_surface.h": "c"
+    }
+}
