@@ -3,6 +3,9 @@
         "*.embeddedhtml": "html",
         "tonc.h": "c",
         "tonc_math.h": "c",
-        "tonc_surface.h": "c"
+        "tonc_surface.h": "c",
+        "xutility": "cpp",
+        "scanline.h": "c",
+        "model.h": "c"
     }
 }
