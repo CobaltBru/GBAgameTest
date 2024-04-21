@@ -34,9 +34,9 @@ void scanline_test(Triangle obj)
 	scanline_push(&sline, &top);
 	scanline_push(&sline, &bottom);
 	scanline_sort(&sline);
-	for (int y = 0; y < 160; ++y) {
+	for (int y = 0; y < M3_HEIGHT; ++y) {
 		scanline_move(&sline);
-		for (int x = 0; x < 100; ++x) {
+		for (int x = 0; x < M3_WIDTH; ++x) {
 			if (sline.active != &sline.active_end && sline.active->left->x <= x && x < sline.active->right->x)
 				m3_plot(x,y,CLR_WHITE);
 		}
@@ -52,8 +52,8 @@ int main()
 
 	Triangle tri;
 	POINT a = {10, 10};
-	POINT b = {50, 50};
-	POINT c = {10, 100};
+	POINT b = {150, 50};
+	POINT c = {50, 130};
 	initTriangle(&tri, a, b, c);
 
 	scanline_test(tri);
