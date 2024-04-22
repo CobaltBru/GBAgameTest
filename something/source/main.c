@@ -51,8 +51,8 @@ int main()
 	m3_fill(CLR_BLACK);
 
 	Triangle tri;
-	POINT a = {10, 10};
-	POINT b = {150, 50};
+	POINT a = {50, 10};
+	POINT b = {100, 50};
 	POINT c = {50, 130};
 	initTriangle(&tri, a, b, c);
 
