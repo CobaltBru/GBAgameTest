@@ -2,46 +2,7 @@
 
 #include <stdio.h>
 #include <tonc.h>
-
-#include "../include/model.h"
-#include "../include/scanline.h"
-#include "../include/span.h"
-#include "../include/trace.h"
-
-void scanline_test(Triangle obj)
-{
-	trace ab;
-	trace ac;
-	trace bc;
-	span top;
-	span bottom;
-	scanline sline;
-
-	trace_set(&ab,&ac,&bc,&obj);
-
-	int	high = (((obj.a.y + 3) & ~0b111) + 4) >> 3;
-	int	mid = (((obj.b.y + 3) & ~0b111) + 4) >> 3;
-	int	low = (((obj.c.y + 3) & ~0b111) + 4) >> 3;
-
-	if (obj.b.x < obj.c.x) {
-		span_init(&top, &ab, &ac, high, mid);
-		span_init(&bottom, &bc, &ac, mid, low);
-	} else {
-		span_init(&top, &ac, &ab, high, mid);
-		span_init(&bottom, &ac, &bc, mid, low);
-	}
-	scanline_init(&sline);
-	scanline_push(&sline, &top);
-	scanline_push(&sline, &bottom);
-	scanline_sort(&sline);
-	for (int y = 0; y < M3_HEIGHT; ++y) {
-		scanline_move(&sline);
-		for (int x = 0; x < M3_WIDTH; ++x) {
-			if (sline.active != &sline.active_end && sline.active->left->x <= x && x < sline.active->right->x)
-				m3_plot(x,y,CLR_WHITE);
-		}
-	}
-}
+#include "./vertex.c"
 
 int main()
 {
@@ -50,15 +11,18 @@ int main()
 	tte_init_se_default(0, BG_CBB(0) | BG_SBB(31));
 	m3_fill(CLR_BLACK);
 
-	Triangle tri;
-	POINT a = {10, 10};
-	POINT b = {150, 50};
-	POINT c = {50, 130};
-	initTriangle(&tri, a, b, c);
+	OBJ obj;
+	Vec3 points[4] = {{0,0,0},{1,0,0},{1,1,0},{0,1,0}};
+	obj.size = sizeof(points);
+	memcpy16(obj.vertex,points,obj.size);
 
-	scanline_test(tri);
+	Vec3 scale = {10,10,10};
+	Vec3 rotate = {0,0,0};
+	Vec3 trans ={50,50,50};
+	vec_world_transform(&obj,scale,rotate,trans);
+	m3_plot(points[0].x,points[0].y,CLR_WHITE);
+	m3_plot(points[1].x,points[1].y,CLR_WHITE);
+	m3_plot(points[2].x,points[2].y,CLR_WHITE);
+	m3_plot(points[3].x,points[3].y,CLR_WHITE);
 
-	while (1)
-		;
-	return 0;
 }

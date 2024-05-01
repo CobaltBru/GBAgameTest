@@ -6,6 +6,19 @@
         "tonc_surface.h": "c",
         "xutility": "cpp",
         "scanline.h": "c",
-        "model.h": "c"
+        "model.h": "c",
+        "math.h": "c",
+        "*.rh": "c",
+        "algorithm": "c",
+        "bit": "c",
+        "charconv": "c",
+        "format": "c",
+        "functional": "c",
+        "memory": "c",
+        "system_error": "c",
+        "type_traits": "c",
+        "vector": "c",
+        "tonc_types.h": "c"
     }
+
 }
