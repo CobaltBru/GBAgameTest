@@ -27,4 +27,10 @@ public:
     void cameraComputeRotMatrix(FIXED result[16]);
     void initWorldToCamspaceMat();
     void computePerspectiveMat();
+    void cameraRotateUP(ANGLE_FIXED_12 speed);
+    void cameraRotateDown(ANGLE_FIXED_12 speed);
+    void cameraRotateLeft(ANGLE_FIXED_12 speed);
+    void cameraRotateRight(ANGLE_FIXED_12 speed);
+    FIXED* getPerspMat();
+    FIXED* getw2cMat();
 };

@@ -34,7 +34,7 @@ void matrix4x4createRotZ(FIXED matrix[16], ANGLE_FIXED_12 angle);
 void matrix4x4SetBasis(FIXED matrix[16], VECTOR x, VECTOR y, VECTOR z); //행렬 만들기
 void matrix4x4setIdentity(FIXED matrix[16]); //행렬 초기화
 void matrix4x4scaler(FIXED matrix[16],FIXED scale); //확대축소
-void matrix4x4rotateYPR(FIXED matrix[16],VECTOR rotate); //회전
+void matrix4x4rotateYPR(FIXED matrix[16],ANGLE_FIXED_12 yaw, ANGLE_FIXED_12 pitch, ANGLE_FIXED_12 roll); //회전
 void matrix4x4SetTranslation(FIXED matrix[16], VECTOR trans); //이동
 
 VECTOR vecTransformed(const FIXED matrix[16], VECTOR vec); //벡터에 행렬 적용

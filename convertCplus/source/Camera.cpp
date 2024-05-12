@@ -31,9 +31,8 @@ void Camera::cameraInit(VECTOR pos,FIXED fov, FIXED near, FIXED far, int mode)
     yaw = int2fx12(0);
     pitch = int2fx12(0);
     roll = int2fx12(0);
-    lookAt = {0,0,0};
+    lookAt = {0,0,1};
     matrix4x4setIdentity(world2cam);
-    initWorldToCamspaceMat();
     computePerspectiveMat();
 }
 
@@ -110,3 +109,28 @@ void Camera::computePerspectiveMat()
     memcpy(this->viewport2imageMat, viewport2image, sizeof(viewport2image));
 }
 
+FIXED* Camera::getPerspMat()
+{
+    return perspMat;
+}
+FIXED* Camera::getw2cMat()
+{
+    return world2cam;
+}
+
+void Camera::cameraRotateUP(ANGLE_FIXED_12 speed)
+{
+    pitch+=speed;
+}
+void Camera::cameraRotateDown(ANGLE_FIXED_12 speed)
+{
+    pitch-=speed;
+}
+void Camera::cameraRotateLeft(ANGLE_FIXED_12 speed)
+{
+    yaw+=speed;
+}
+void Camera::cameraRotateRight(ANGLE_FIXED_12 speed)
+{
+    yaw-=speed;
+}

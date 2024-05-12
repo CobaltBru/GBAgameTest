@@ -11,7 +11,7 @@ FIXED getRadian(FIXED num)
     return fxmul(num,fxdiv(PI,180.0f));
 }
 
-
+void printMat(FIXED mat[16]);
 
 // void print_obj(const t_obj* obj)
 // {
@@ -159,7 +159,7 @@ void matrix4x4scaler(FIXED matrix[16],FIXED scale) //확대축소
     matrix[0] = scale;
     matrix[5] = scale;
     matrix[10] = scale;
-    matrix[15] = scale;
+    //matrix[15] = scale;
 }
 void matrix4x4createRotX(FIXED matrix[16], ANGLE_FIXED_12 angle) 
 {
@@ -197,25 +197,21 @@ void matrix4x4createRotZ(FIXED matrix[16], ANGLE_FIXED_12 angle)
     matrix[1] = -sinFx(angle);
     matrix[5] = cosFx(angle);
 }
-void matrix4x4rotateYPR(FIXED matrix[16],VECTOR rotate) //회전
+void matrix4x4rotateYPR(FIXED matrix[16],ANGLE_FIXED_12 yaw, ANGLE_FIXED_12 pitch, ANGLE_FIXED_12 roll) //회전
 {
     FIXED tmp[16];
-    rotate.x = getRadian(rotate.x);
-    rotate.y = getRadian(rotate.y);
-    rotate.z = getRadian(rotate.z);
     matrix4x4setIdentity(tmp);
-    tmp[0] = (cosf(rotate.z) * cosf(rotate.x)) + (sinf(rotate.z)*sinf(rotate.x)*sinf(rotate.y));
-    tmp[1] = -(sinf(rotate.z) * cosf(rotate.x)) + (cosf(rotate.z)*sinf(rotate.x)*sinf(rotate.y));
-    tmp[2] = sinf(rotate.x) * cosf(rotate.y);
-
-    tmp[4] = sinf(rotate.z) * cosf(rotate.y);
-    tmp[5] = cosf(rotate.z) * cosf(rotate.y);
-    tmp[6] = -sinf(rotate.y);
-
-    tmp[8] = (-cosf(rotate.z) * sinf(rotate.z)) + (sinf(rotate.z)*cosf(rotate.x)*sinf(rotate.y));
-    tmp[9] = (sinf(rotate.z) * sinf(rotate.z)) + (cosf(rotate.z)*cosf(rotate.x)*sinf(rotate.y));
-    tmp[10] = cosf(rotate.y) * cosf(rotate.x);
-
+    tmp[0] = fxmul(cosFx(roll), cosFx(yaw)) + fxmul(fxmul(sinFx(roll), sinFx(yaw)), sinFx(pitch));
+    tmp[1] = -fxmul(sinFx(roll), cosFx(yaw)) + fxmul(fxmul(cosFx(roll), sinFx(yaw)), sinFx(pitch));
+    tmp[2] = fxmul(sinFx(yaw), cosFx(pitch));
+    // tmp[3] = 0;
+    tmp[4] = fxmul(sinFx(roll), cosFx(pitch));
+    tmp[5] = fxmul(cosFx(roll), cosFx(pitch));
+    tmp[6] = -sinFx(pitch);
+    // tmp[7] = 0;
+    tmp[8] = fxmul(-cosFx(roll), sinFx(yaw)) + fxmul(fxmul(sinFx(roll), cosFx(yaw)), sinFx(pitch));
+    tmp[9] = fxmul(sinFx(roll), sinFx(yaw)) + fxmul(fxmul(cosFx(roll), cosFx(yaw)), sinFx(pitch));
+    tmp[10] = fxmul(cosFx(pitch), cosFx(yaw));
     matrix4x4Mul(matrix,tmp);
 }
 
