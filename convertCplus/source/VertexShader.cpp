@@ -1,17 +1,4 @@
-#pragma once
-
-#include "tonc.h"
-#include "math.h"
-
-class VertexShader
-{
-    FIXED Matrix[16];
-public:
-    void S_MatrixCalc(FIXED scale);
-    void R_MatrixCalc(VECTOR rotate);
-    void T_MatrixCalc(VECTOR trans);
-    VECTOR vertexToWorld(VECTOR vertex);
-};
+#include "VertexShader.hpp"
 
 VertexShader::VertexShader()
 {

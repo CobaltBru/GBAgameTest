@@ -1,9 +1,9 @@
-#pragma once
 
+#include <string.h>
 #include <tonc.h>
 #include <math.h>
 
-#include "math.h"
+#include "math2.h"
 
 
 FIXED getRadian(FIXED num)
@@ -11,14 +11,7 @@ FIXED getRadian(FIXED num)
     return fxmul(num,fxdiv(PI,180.0f));
 }
 
-VECTOR make_vector(FIXED x, FIXED y, FIXED z)
-{
-    VECTOR tmp;
-    tmp.x = x;
-    tmp.y = y;
-    tmp.z = z;
-    return tmp;
-}
+
 
 // void print_obj(const t_obj* obj)
 // {
@@ -47,20 +40,60 @@ VECTOR vecTransformed(const FIXED matrix[16], VECTOR vec) //행렬 변환을 적
     return transformed;
 }
 
-void vecTransform(const FIXED matrix[16], VECTOR* vec) //행렬 변환을 적용
+VECTOR vecScaled(VECTOR vec, FIXED factor) 
 {
-    VECTOR transformed;
-    transformed.x = fxmul(vec->x,matrix[0]) + fxmul(vec->y,matrix[1]) + fxmul(vec->z,matrix[2]) + matrix[3];
-    transformed.y = fxmul(vec->x,matrix[4]) + fxmul(vec->y,matrix[5]) + fxmul(vec->z,matrix[6]) + matrix[7];
-    transformed.z = fxmul(vec->x,matrix[8]) + fxmul(vec->y,matrix[9]) + fxmul(vec->z,matrix[10]) + matrix[11];
-    FIXED w = fxmul(vec->x , matrix[12]) + fxmul(vec->x , matrix[13]) + fxmul(vec->x , matrix[14]) + matrix[15];
-    *vec = transformed;
-    if(w != int2fx(1))
-    {
-        vec->x = fxdiv(transformed.x, w);
-        vec->y = fxdiv(transformed.y, w);
-        vec->z = fxdiv(transformed.z, w); 
-    }
+    vec.x = fxmul(vec.x, factor);
+    vec.y = fxmul(vec.y, factor);
+    vec.z = fxmul(vec.z, factor);
+    return vec;
+}
+
+void vecScale(VECTOR *vec, FIXED factor) 
+{
+    vec->x = fxmul(vec->x, factor);
+    vec->y = fxmul(vec->y, factor);
+    vec->z = fxmul(vec->z, factor);
+}
+
+VECTOR vecAdd(VECTOR a, VECTOR b) 
+{
+    a.x = fxadd(a.x, b.x);
+    a.y = fxadd(a.y, b.y);
+    a.z = fxadd(a.z, b.z);
+    return a;
+}
+
+VECTOR vecSub(VECTOR a, VECTOR b) 
+{
+    a.x = fxsub(a.x, b.x);
+    a.y = fxsub(a.y, b.y);
+    a.z = fxsub(a.z, b.z);
+    return a;
+}
+
+VECTOR vecUnit(VECTOR a) 
+{
+    FIXED mag =  Sqrt((fxmul(a.x, a.x) + fxmul(a.y, a.y) + fxmul(a.z, a.z)) << (FIX_SHIFT) ); // sqrt(2**8) * sqrt(2**8) = 2**8
+    return {fxdiv(a.x, mag), fxdiv(a.y, mag),fxdiv(a.z, mag) };
+}
+
+FIXED vecMag(VECTOR a) {
+     return Sqrt((fxmul(a.x, a.x) + fxmul(a.y, a.y) + fxmul(a.z, a.z)) << (FIX_SHIFT) ); // sqrt(2**8) * sqrt(2**8) = 2**8
+}
+
+
+VECTOR vecCross(VECTOR a, VECTOR b) 
+{
+    VECTOR cross;
+    cross.x = fxmul(a.y, b.z) - fxmul(a.z, b.y);
+    cross.y = fxmul(a.z, b.x) - fxmul(a.x, b.z);
+    cross.z = fxmul(a.x, b.y) - fxmul(a.y, b.x);
+    return cross;
+}
+
+FIXED vecDot(VECTOR a, VECTOR b) 
+{
+    return fxmul(a.x, b.x) + fxmul(a.y, b.y) + fxmul(a.z, b.z);
 }
 
 FIXED matrix4x4Get(const FIXED matrix[16], int row, int col) 
@@ -98,6 +131,20 @@ void matrix4x4Transpose(FIXED mat[16])
     }
 }
 
+void matrix4x4SetBasis(FIXED matrix[16], VECTOR x, VECTOR y, VECTOR z) 
+{
+    matrix[0] = x.x;
+    matrix[1] = y.x;
+    matrix[2] = z.x;
+
+    matrix[4] = x.y;
+    matrix[5] = y.y;
+    matrix[6] = z.y;
+
+    matrix[8] = x.z;
+    matrix[9] = y.z;
+    matrix[10] = z.z;
+}
 void matrix4x4setIdentity(FIXED matrix[16]) 
 {
     memset(matrix, 0, sizeof(*matrix) * 16);

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <tonc.h>
 
 // #define PI_FLT 3.14159265f
@@ -14,22 +16,36 @@ typedef struct s_obj t_obj;
 struct s_obj
 {
     VECTOR vertex[512];
-    int size;
+    int index[512];
+    int v_size;
+    int i_size;
 };
+FIXED getRadian(FIXED num);
+
+FIXED matrix4x4Get(const FIXED matrix[16], int row, int col);
+void matrix4x4Set(FIXED matrix[16], int row, int col, FIXED value);
 
 void matrix4x4Transpose(FIXED mat[16]);
-void matrix4x4Mul(FIXED a[16], const FIXED b[16]) ;
-void matrix4x4createRotX(FIXED matrix[16], ANGLE_FIXED_12 angle) ;
-void matrix4x4createRotY(FIXED matrix[16], ANGLE_FIXED_12 angle) ;
-void matrix4x4createRotZ(FIXED matrix[16], ANGLE_FIXED_12 angle) ;
+void matrix4x4Mul(FIXED a[16], const FIXED b[16]);
+void matrix4x4createRotX(FIXED matrix[16], ANGLE_FIXED_12 angle);
+void matrix4x4createRotY(FIXED matrix[16], ANGLE_FIXED_12 angle);
+void matrix4x4createRotZ(FIXED matrix[16], ANGLE_FIXED_12 angle);
 
-
+void matrix4x4SetBasis(FIXED matrix[16], VECTOR x, VECTOR y, VECTOR z); //행렬 만들기
 void matrix4x4setIdentity(FIXED matrix[16]); //행렬 초기화
 void matrix4x4scaler(FIXED matrix[16],FIXED scale); //확대축소
 void matrix4x4rotateYPR(FIXED matrix[16],VECTOR rotate); //회전
 void matrix4x4SetTranslation(FIXED matrix[16], VECTOR trans); //이동
 
 VECTOR vecTransformed(const FIXED matrix[16], VECTOR vec); //벡터에 행렬 적용
+VECTOR vecScaled(VECTOR vec, FIXED factor);
+void vecScale(VECTOR *vec, FIXED factor);
+VECTOR vecAdd(VECTOR a, VECTOR b);
+VECTOR vecSub(VECTOR a, VECTOR b);
+VECTOR vecUnit(VECTOR a);
+FIXED vecMag(VECTOR a);
+VECTOR vecCross(VECTOR a, VECTOR b);
+FIXED vecDot(VECTOR a, VECTOR b);
 
 
 INLINE FIXED_12 int2fx12(int num) {
