@@ -29,7 +29,7 @@ VECTOR vecTransformed(const FIXED matrix[16], VECTOR vec) //행렬 변환을 적
     transformed.x = fxmul(vec.x,matrix[0]) + fxmul(vec.y,matrix[1]) + fxmul(vec.z,matrix[2]) + matrix[3];
     transformed.y = fxmul(vec.x,matrix[4]) + fxmul(vec.y,matrix[5]) + fxmul(vec.z,matrix[6]) + matrix[7];
     transformed.z = fxmul(vec.x,matrix[8]) + fxmul(vec.y,matrix[9]) + fxmul(vec.z,matrix[10]) + matrix[11];
-    FIXED w = fxmul(vec.x , matrix[12]) + fxmul(vec.x , matrix[13]) + fxmul(vec.x , matrix[14]) + matrix[15];
+    FIXED w = fxmul(vec.x , matrix[12]) + fxmul(vec.y , matrix[13]) + fxmul(vec.z , matrix[14]) + matrix[15];
 
     if(w != int2fx(1))
     {
@@ -159,7 +159,7 @@ void matrix4x4scaler(FIXED matrix[16],FIXED scale) //확대축소
     matrix[0] = scale;
     matrix[5] = scale;
     matrix[10] = scale;
-    //matrix[15] = scale;
+    matrix[15] = scale;
 }
 void matrix4x4createRotX(FIXED matrix[16], ANGLE_FIXED_12 angle) 
 {

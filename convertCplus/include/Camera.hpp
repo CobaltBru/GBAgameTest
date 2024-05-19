@@ -7,6 +7,7 @@
 
 class Camera
 {
+    public:
     VECTOR pos;
     ANGLE_FIXED_12 yaw,pitch,roll;
     VECTOR lookAt;
@@ -21,6 +22,13 @@ class Camera
 
     FIXED viewport2imageMat[16];
 
+    FIXED perspFacX;
+    FIXED perspFacY;
+    FIXED viewportTransFacX;
+    FIXED viewportTransAddX;
+    FIXED viewportTransFacY;
+    FIXED viewportTransAddY;
+
 
 public:
     void cameraInit(VECTOR pos,FIXED fov, FIXED near, FIXED far, int mode);
@@ -31,6 +39,9 @@ public:
     void cameraRotateDown(ANGLE_FIXED_12 speed);
     void cameraRotateLeft(ANGLE_FIXED_12 speed);
     void cameraRotateRight(ANGLE_FIXED_12 speed);
+    void applyMatrix(t_obj& obj);
     FIXED* getPerspMat();
     FIXED* getw2cMat();
+    FIXED* getv2iMat();
+    void setLookAt(VECTOR dir);
 };

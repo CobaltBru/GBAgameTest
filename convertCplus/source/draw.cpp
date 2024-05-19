@@ -1,5 +1,8 @@
 #include <tonc.h>
 #include "math2.h"
+#include "Camera.hpp"
+
+
 
 void drawWireFrame(t_obj &obj, u32 mode)
 {
@@ -20,6 +23,8 @@ void drawWireFrame(t_obj &obj, u32 mode)
         }
     }
 }
+
+
 
 void printOBJ(t_obj &obj)
 {
@@ -42,4 +47,16 @@ void printMat(FIXED mat[16])
         tte_write(s1);
     }
     tte_write("\n");
+}
+
+void printVec(char* tag,VECTOR vec)
+{
+    char s1[100];
+    sprintf(s1,"%s:(%g,%g,%g)\n",tag,fx2float(vec.x),fx2float(vec.y),fx2float(vec.z));
+    tte_write(s1);
+}
+
+void drawBefore(Camera& cam)
+{
+    cam.initWorldToCamspaceMat();
 }

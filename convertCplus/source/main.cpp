@@ -7,10 +7,25 @@
 // #include "draw.cpp"
 //  #include "VertexShader.cpp"
 //  #include "Camera.cpp"
-
-void drawWireFrame(t_obj &obj, int mode);
+void drawBefore(Camera& cam);
+void drawWireFrame(t_obj &obj, u32 mode);
 void printOBJ(t_obj &obj);
 void printMat(FIXED mat[16]);
+void printVec(char* tag,VECTOR vec);
+
+void setMode0() {
+    // 화면 모드 0 및 BG0 활성화
+    REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
+    
+    // BG0 컨트롤 설정 (16컬러 타일, 1번 캐릭터 블록, 31번 스크린 블록)
+    tte_init_se_default(0, BG_CBB(0)|BG_SBB(31));
+
+}
+
+void setMode4() {
+    REG_DISPCNT = DCNT_MODE4 | DCNT_BG2;
+	m4_fill(BLD_BLACK);
+}
 
 int main()
 {
@@ -18,12 +33,9 @@ int main()
 	irq_init(NULL);
 	irq_add(II_VBLANK, NULL);
 
-	// Video mode 0, enable bg 0.
-	// REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
-	// m0_fill(CLR_BLACK);
-	REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
-	tte_init_se_default(0, BG_CBB(0) | BG_SBB(31));
-	t_obj obj;
+	setMode0();
+	
+	t_obj obj;//--------------------------------obj init
 	VECTOR vertex[] =
 		{{int2fx(0), int2fx(0), int2fx(0)},
 		 {int2fx(1), int2fx(0), int2fx(0)},
@@ -38,9 +50,9 @@ int main()
 	memcpy(obj.index, idx, sizeof(idx));
 	obj.v_size = 8;
 	obj.i_size = 42;
-	// printOBJ(obj);
+	//printOBJ(obj);
 
-	VertexShader v;
+	VertexShader v;//-----------------------vertexShader apply
 	v.S_MatrixCalc(int2fx(10));
 	v.R_MatrixCalc(int2fx(0), int2fx(0), int2fx(0));
 	v.T_MatrixCalc({int2fx(10), int2fx(50), int2fx(50)});
@@ -48,20 +60,21 @@ int main()
 	for (int i = 0; i < obj.v_size; i++)
 	{
 		obj.vertex[i] = v.vertexToWorld(obj.vertex[i]);
-		// printOBJ(obj);
 	}
-	Camera cam;
-	cam.cameraInit({int2fx(0), int2fx(0), int2fx(0)}, int2fx(192), int2fx(1), int2fx(256), DCNT_MODE4);
-	printMat(cam.getPerspMat());
-	// drawWireFrame(obj, DCNT_MODE4);
-	cam.initWorldToCamspaceMat();
-	//printMat(cam.getPerspMat());
-	for (int i = 0; i < obj.v_size; i++)
-	{
-		obj.vertex[i] = vecTransformed(cam.getw2cMat(), obj.vertex[i]);
-	}
-	printOBJ(obj);
 
+
+	Camera cam; //------------------camera setting
+	cam.cameraInit({int2fx(0), int2fx(0), int2fx(0)}, int2fx(192), int2fx(1), int2fx(256), DCNT_MODE4);
+	cam.setLookAt({int2fx(0),int2fx(0),int2fx(10)});
+	//printMat(cam.getPerspMat());
+	drawBefore(cam); //시점 변환 행렬 초기화
+	//printMat(cam.getw2cMat());
+	//printOBJ(obj);
+	cam.applyMatrix(obj);
+
+	//drawWireFrame(obj, DCNT_MODE4);
+	//printOBJ(obj);
+	
 	// while (1)
 	// {
 	// 	vid_vsync();
