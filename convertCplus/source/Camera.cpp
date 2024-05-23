@@ -3,6 +3,7 @@
 
 void printVec(char* tag,VECTOR vec);
 void printMat(FIXED mat[16]);
+
 void Camera::cameraInit(VECTOR pos,FIXED fov, FIXED near, FIXED far, int mode)
 {
 
@@ -93,7 +94,8 @@ void Camera::computePerspectiveMat()
     FIXED bottom = -top;
     FIXED right = fxmul(top, this->aspect);
     FIXED left = -right;
-
+    //printVec("n,f,t",{near,far,top });
+    //printVec("b,r,l",{bottom,right,left});
     FIXED persp[16] = {
         fxdiv( fxmul(near, int2fx(2)), right - left), 0, fxdiv(right + left, right - left), 0,
         0, fxdiv(fxmul(near, int2fx(2)), top - bottom), fxdiv(top + bottom, top - bottom), 0,
@@ -128,16 +130,19 @@ void Camera::applyMatrix(t_obj& obj)
 {
     for (int i = 0;i<obj.v_size;i++)
     {
-        printVec("before",obj.vertex[i]);
+        //printVec("before",obj.vertex[i]);
+        //printMat(world2cam);
+        //printMat(perspMat);
+        //printMat(viewport2imageMat);
         VECTOR point = vecTransformed(world2cam,obj.vertex[i]);
         FIXED z = -point.z;
         FIXED x = fxmul(perspFacX,point.x);
         FIXED y = fxmul(perspFacY,point.y);
-        //printMat(world2cam);
-        printVec("after1",point);
+        //printVec("xyz",{x,y,z});
+        //printVec("after1",point);
         obj.vertex[i].x = fx2int( fxmul(viewportTransFacX, fxdiv(x, z)) + viewportTransAddX );
         obj.vertex[i].y = fx2int( fxmul(viewportTransFacY, fxdiv(y, z)) + viewportTransAddY );
-        printVec("after2",obj.vertex[i]);
+        //printVec("after2",obj.vertex[i]);
     }
 }
 

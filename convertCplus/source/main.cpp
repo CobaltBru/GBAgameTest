@@ -53,18 +53,18 @@ int main()
 	//printOBJ(obj);
 
 	VertexShader v;//-----------------------vertexShader apply
-	v.S_MatrixCalc(int2fx(10));
+	v.S_MatrixCalc(int2fx(20));
 	v.R_MatrixCalc(int2fx(0), int2fx(0), int2fx(0));
-	v.T_MatrixCalc({int2fx(10), int2fx(50), int2fx(50)});
-	// printMat(v.getMatrix());
+	v.T_MatrixCalc({int2fx(50), int2fx(50), int2fx(50)});
+	//printMat(v.getMatrix());
 	for (int i = 0; i < obj.v_size; i++)
 	{
 		obj.vertex[i] = v.vertexToWorld(obj.vertex[i]);
 	}
-
+	//printOBJ(obj);
 
 	Camera cam; //------------------camera setting
-	cam.cameraInit({int2fx(0), int2fx(0), int2fx(0)}, int2fx(192), int2fx(1), int2fx(256), DCNT_MODE4);
+	cam.cameraInit({int2fx(50), int2fx(50), int2fx(-10)}, 192, int2fx(1), int2fx(256), DCNT_MODE4);
 	cam.setLookAt({int2fx(0),int2fx(0),int2fx(10)});
 	//printMat(cam.getPerspMat());
 	drawBefore(cam); //시점 변환 행렬 초기화
@@ -73,7 +73,7 @@ int main()
 	cam.applyMatrix(obj);
 
 	//drawWireFrame(obj, DCNT_MODE4);
-	//printOBJ(obj);
+	printOBJ(obj);
 	
 	// while (1)
 	// {

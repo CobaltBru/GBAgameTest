@@ -159,7 +159,7 @@ void matrix4x4scaler(FIXED matrix[16],FIXED scale) //확대축소
     matrix[0] = scale;
     matrix[5] = scale;
     matrix[10] = scale;
-    matrix[15] = scale;
+    //matrix[15] = scale;
 }
 void matrix4x4createRotX(FIXED matrix[16], ANGLE_FIXED_12 angle) 
 {
