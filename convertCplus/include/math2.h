@@ -20,6 +20,11 @@ struct s_obj
     int v_size;
     int i_size;
 };
+
+struct rester_point
+{
+    s16 x,y;
+};
 FIXED getRadian(FIXED num);
 
 FIXED matrix4x4Get(const FIXED matrix[16], int row, int col);
