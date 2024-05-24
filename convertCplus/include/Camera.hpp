@@ -1,9 +1,10 @@
-
+#pragma once
 #include <tonc.h>
 #include <math.h>
 #include <string.h>
 #include <tonc.h>
 #include "math2.h"
+#include "basicStruct.hpp"
 
 class Camera
 {

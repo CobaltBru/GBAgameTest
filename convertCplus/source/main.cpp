@@ -4,12 +4,14 @@
 #include "math2.h"
 #include "Camera.hpp"
 #include "VertexShader.hpp"
+#include "basicStruct.hpp"
 // #include "draw.cpp"
 //  #include "VertexShader.cpp"
 //  #include "Camera.cpp"
 void drawBefore(Camera& cam);
 void drawWireFrame(t_obj &obj, u32 mode);
-void printOBJ(t_obj &obj);
+void printNrestOBJ(t_obj &obj);
+void printrestOBJ(t_obj &obj);
 void printMat(FIXED mat[16]);
 void printVec(char* tag,VECTOR vec);
 
@@ -73,7 +75,8 @@ int main()
 	cam.applyMatrix(obj);
 
 	//drawWireFrame(obj, DCNT_MODE4);
-	printOBJ(obj);
+	//printNrestOBJ(obj);
+	//printrestOBJ(obj);
 	
 	// while (1)
 	// {

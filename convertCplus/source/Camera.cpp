@@ -1,8 +1,8 @@
 #include "Camera.hpp"
 
-
 void printVec(char* tag,VECTOR vec);
 void printMat(FIXED mat[16]);
+void printrestPoint(char* tag, int x, int y, FIXED z);
 
 void Camera::cameraInit(VECTOR pos,FIXED fov, FIXED near, FIXED far, int mode)
 {
@@ -139,10 +139,10 @@ void Camera::applyMatrix(t_obj& obj)
         FIXED x = fxmul(perspFacX,point.x);
         FIXED y = fxmul(perspFacY,point.y);
         //printVec("xyz",{x,y,z});
-        //printVec("after1",point);
-        obj.vertex[i].x = fx2int( fxmul(viewportTransFacX, fxdiv(x, z)) + viewportTransAddX );
-        obj.vertex[i].y = fx2int( fxmul(viewportTransFacY, fxdiv(y, z)) + viewportTransAddY );
-        //printVec("after2",obj.vertex[i]);
+        printVec("after1",point);
+        obj.rest[i].x = fx2int( fxmul(viewportTransFacX, fxdiv(x, z)) + viewportTransAddX );
+        obj.rest[i].y = fx2int( fxmul(viewportTransFacY, fxdiv(y, z)) + viewportTransAddY );
+        printrestPoint("afterRest", obj.rest[i].x,obj.rest[i].y,obj.vertex[i].z);
     }
 }
 

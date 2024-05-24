@@ -1,8 +1,4 @@
 
-#include <string.h>
-#include <tonc.h>
-#include <math.h>
-
 #include "math2.h"
 
 

@@ -1,3 +1,4 @@
+#pragma once
 #include <tonc.h>
 #include "math2.h"
 

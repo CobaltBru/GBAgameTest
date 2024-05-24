@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string.h>
+#include <tonc.h>
+#include <math.h>
 #include <tonc.h>
 
 // #define PI_FLT 3.14159265f
@@ -10,21 +13,8 @@
 
 typedef s32 FIXED_12;
 typedef FIXED_12 ANGLE_FIXED_12;
-typedef struct s_obj t_obj;
 
 
-struct s_obj
-{
-    VECTOR vertex[512];
-    int index[512];
-    int v_size;
-    int i_size;
-};
-
-struct rester_point
-{
-    s16 x,y;
-};
 FIXED getRadian(FIXED num);
 
 FIXED matrix4x4Get(const FIXED matrix[16], int row, int col);
