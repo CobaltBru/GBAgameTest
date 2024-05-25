@@ -6,6 +6,24 @@
         "xiosbase": "cpp",
         "xutility": "cpp",
         "type_traits": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "algorithm": "cpp",
+        "optional": "cpp",
+        "system_error": "cpp",
+        "xlocmon": "cpp",
+        "atomic": "cpp",
+        "charconv": "cpp",
+        "exception": "cpp",
+        "istream": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "ostream": "cpp",
+        "streambuf": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "xlocale": "cpp",
+        "xlocinfo": "cpp",
+        "xmemory": "cpp",
+        "xstring": "cpp"
     }
 }

@@ -1,0 +1,60 @@
+
+Matrix inv_translation = {
+	1, 0, 0, -x,
+	0, 1, 0, -y,
+	0, 0, 1, -z,
+	0, 0, 0, 1
+};
+
+Matrix	inv_rotation = {
+	left.x, left.y, left.z, 0,
+	up.x, up.y, up.z, 0,
+	forward.x, forward.y, forward.z, 0,
+	0, 0, 0, 1
+};
+
+Matrix	view_matrix = inv_rotation * inv_translation;
+
+/*
+X_p = X_v * near / Z_v
+Y_p = Y_v * near / Z_v
+
+X_p는 l ~ r이므로 -1에서 1로 대응해야함.
+일반적인 경우 좌우 대칭이므로
+l = -tan(fov * 0.5) * near
+r = tan(fov * 0.5) * near
+
+((X_p - l) / (r - l) * 2) - 1
+ = 2 * X_p / (r - l) - (r + l) / (r - l)
+
+r - l = 2 * tan(fov * 0.5) * near
+r + l = 0
+
+ = X_p / (tan(fov * 0.5) * near)
+이건 x를 맞출 때 애기고 aspect ratio에 따라 가로로 늘릴지 세로로 늘릴지에 따라 다름
+aspectRatio = width / height
+-------------------
+Z유도
+(A * Z + B) / Z가
+Z = near에서 -1,
+Z = far에서 1일 것으로 정하고 계산
+
+A + B / near = -1
+A + B / far = 1
+연립하면
+B = -(A + 1) * near
+A + -(A + 1) * near / far = 1
+
+A * far - A * near - near = far
+A * (far - near) = far + near
+
+A = (n + f) / (f - n)
+B = -2fn / (f - n)
+*/
+
+Matrix	perspective_matrix = {
+	aspect / tan, 0, 0, 0,
+	0, 1 / tan, 0 , 0, 0
+	0, 0, (n + f) / (f - n), -2fn / (f - n)
+	0, 0, 1, 0
+};

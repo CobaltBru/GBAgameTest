@@ -71,7 +71,7 @@ void printrestPoint(char* tag, int x, int y, FIXED z)
     tte_write(s1);
 }
 
-void drawBefore(Camera& cam)
+void drawBefore(Camera& cam) //매 프레임마다  실행되어야함
 {
-    cam.initWorldToCamspaceMat();
+    cam.initWorldToCamspaceMat(); // 시점변환 행렬 갱신
 }

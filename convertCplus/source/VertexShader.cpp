@@ -2,29 +2,29 @@
 
 VertexShader::VertexShader()
 {
-    matrix4x4setIdentity(Matrix);
+    matrix = mat4::identity();
 }
-void VertexShader::S_MatrixCalc(FIXED scale)
+void VertexShader::S_MatrixCalc(fixed scale)
 {
-    matrix4x4scaler(Matrix,scale);
+    matrix = matrix * scale;
 }
 
 void VertexShader::R_MatrixCalc(ANGLE_FIXED_12 yaw, ANGLE_FIXED_12 pitch, ANGLE_FIXED_12 roll)
 {
-    matrix4x4rotateYPR(Matrix, yaw,pitch,roll);
+    matrix4x4rotateYPR(matrix, yaw,pitch,roll);
 }
 
-void VertexShader::T_MatrixCalc(VECTOR trans)
+void VertexShader::T_MatrixCalc(vec4 trans)
 {
-    matrix4x4SetTranslation(Matrix, trans);
+    matrix4x4SetTranslation(matrix, trans);
 }
 
-VECTOR VertexShader::vertexToWorld(VECTOR vertex)
+vec4 VertexShader::vertexToWorld(vec4 vertex)
 {
-    return vecTransformed(Matrix, vertex);
+    return matrix * vertex;
 }
 
-FIXED* VertexShader::getMatrix()
+mat4 VertexShader::getMatrix()
 {
-    return Matrix;
+    return matrix;
 }
