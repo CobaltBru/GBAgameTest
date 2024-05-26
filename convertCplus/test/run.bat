@@ -1,0 +1,1 @@
+c++ test.cpp ../source/fixed.cpp ../source/vec2.cpp -I../include

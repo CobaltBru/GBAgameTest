@@ -4,19 +4,15 @@ VertexShader::VertexShader()
 {
     matrix = mat4::identity();
 }
-void VertexShader::S_MatrixCalc(fixed scale)
-{
-    matrix = matrix * scale;
-}
 
-void VertexShader::R_MatrixCalc(ANGLE_FIXED_12 yaw, ANGLE_FIXED_12 pitch, ANGLE_FIXED_12 roll)
+void VertexShader::TRS_MatrixCalc(vec3 scale, int yaw, int pitch, int roll, vec3 trans)
 {
-    matrix4x4rotateYPR(matrix, yaw,pitch,roll);
-}
-
-void VertexShader::T_MatrixCalc(vec4 trans)
-{
-    matrix4x4SetTranslation(matrix, trans);
+    // matrix = mat4::translate(trans.x, trans.y, trans.z) * matrix;
+    mat4    T = mat4::translate(trans.x, trans.y, trans.z);
+    mat4    R = mat4::rotateY(yaw) *  mat4::rotateX(pitch) * mat4::rotateZ(roll);
+    mat4    S = mat4::scale(scale.x, scale.y, scale.z);
+    // mat4    M = T * R * S; 
+    this->matrix = T * R * S;
 }
 
 vec4 VertexShader::vertexToWorld(vec4 vertex)

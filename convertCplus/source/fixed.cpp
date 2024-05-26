@@ -13,9 +13,10 @@ fixed::fixed(float f)
 {
     num = f * (1 << FIX_SHIFT);
 }
+
 fixed::operator    float() const
 {
-    return num / (1 << FIX_SHIFT);
+    return float(num) / (1 << FIX_SHIFT);
 }
 fixed::operator    int() const
 {
@@ -23,7 +24,7 @@ fixed::operator    int() const
 }
 
 fixed   fixed::operator-() const {
-    return fixed::from(this->num);
+    return fixed::from(-this->num);
 }
 
 fixed fixed::operator+(fixed other) const
@@ -41,6 +42,12 @@ fixed fixed::operator*(fixed other) const
 fixed fixed::operator/(fixed other) const
 {
     return fixed::from(int(((1 << FIX_SHIFT) * i64(num)) / other.num));
+}
+fixed fixed::operator>>(int shift) const {
+    return fixed::from(this->num >> shift);
+}
+fixed fixed::operator<<(int shift) const {
+    return fixed::from(this->num << shift);
 }
 
 bool fixed::operator<(fixed other) const {
@@ -88,18 +95,16 @@ fixed &fixed::operator/=(fixed other) {
     return (*this);
 }
 
-fixed   fixed::sqrt(fixed other) {
-    int     value = 0;
-
-    for (int i = 15; i >= 0; --i) {
-        int const   width = 1 << i;
-        int const   prediction = (value + width) * (value + width);
-    
-        if (prediction <= (other.num << FIX_SHIFT))
-            value += width;
-    }
-    return (fixed::from(value));
+fixed &fixed::operator>>=(int shift) {
+    *this = *this >> shift;
+    return (*this);
 }
+
+fixed &fixed::operator<<=(int shift) {
+    *this = *this << shift;
+    return (*this);
+}
+
 
 fixed   fixed::from(int i) {
     fixed   ret;

@@ -7,7 +7,7 @@ void	swap(T &a, T& b) {
 	T tmp = a;
 
 	a = b;
-	b = a;
+	b = tmp;
 }
 
 #endif
