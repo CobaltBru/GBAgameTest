@@ -1,5 +1,4 @@
-#pragma once
-#include "math2.h"
+#include "math2.hpp"
 
 typedef struct s_obj t_obj;
 

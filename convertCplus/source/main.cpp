@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <tonc.h>
 #include <math.h>
-#include "math2.h"
+#include "math2.hpp"
 #include "Camera.hpp"
 #include "VertexShader.hpp"
 #include "basicStruct.hpp"

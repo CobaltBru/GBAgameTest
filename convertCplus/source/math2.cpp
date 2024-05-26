@@ -1,5 +1,5 @@
 
-#include "math2.h"
+#include "math2.hpp"
 #include "util.hpp"
 
 fixed getRadian(fixed num)

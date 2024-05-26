@@ -1,5 +1,3 @@
-#pragma once
-
 #include <string.h>
 #include <math.h>
 #include "mat4.hpp"

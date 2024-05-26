@@ -1,5 +1,5 @@
 #pragma once
-#include "math2.h"
+#include "math2.hpp"
 
 
 class VertexShader
