@@ -34,12 +34,11 @@ vec3 vecCross(vec3 a, vec3 b)
 
 fixed   sqrt(fixed f) {
     fixed   l = 0;
-    fixed   r = f + fixed::from(1);
+    fixed   r = f + 1;
     fixed   m;
 
     while(l.num != r.num - 1) {
         m = (l + r) >> 1;
-        // fixed(int(l + r) >> 1);
         if (m * m <= f)
             l = m;
         else

@@ -28,9 +28,13 @@ void setMode0()
 
 void setMode4()
 {
-	REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
-	m3_fill(CLR_BLACK);
-	//vid_page = vid_mem_front;
+	REG_DISPCNT = DCNT_MODE4 | DCNT_BG2;
+	*(unsigned short*)(0x05000000) = CLR_BLACK;
+	*(unsigned short*)(0x05000016) = CLR_WHITE;
+
+	m4_fill(0);
+	//vid_flip();
+
 }
 
 int main()
@@ -39,10 +43,8 @@ int main()
 	irq_init(NULL);
 	irq_add(II_VBLANK, NULL);
 
-	setMode0();
+	setMode4();
 	
-	vid_vsync();
-	key_poll();
 	t_obj obj,runtime_obj;		//--------------------------------obj init
 	vec4 vertex[] = 
 		{{0, 0, 0, 1},
@@ -85,18 +87,25 @@ int main()
 	{
 		vid_vsync();
 		key_poll();
-		//runtime_obj = obj;
+		m4_fill(0);
+		runtime_obj = obj;
 		pitch+= 1000 * key_tri_vert();
 		yaw+= 1000 * key_tri_horz();
 
-		// v.TRS_MatrixCalc({10,10,10},yaw,pitch,roll,{50,50,50});
-		// for (int i = 0; i < runtime_obj.v_size; i++)
-		// 	{
-		// 		runtime_obj.vertex[i] = v.vertexToWorld(runtime_obj.vertex[i]);
-		// 	}
-		// drawBefore(cam);
-		// cam.applyMatrix(runtime_obj);
-		// drawWireFrame(runtime_obj, DCNT_MODE4);
+		v.TRS_MatrixCalc({10,10,10},yaw,pitch,roll,{50,50,50});
+		for (int i = 0; i < runtime_obj.v_size; i++)
+			{
+				runtime_obj.vertex[i] = v.vertexToWorld(runtime_obj.vertex[i]);
+			}
+		drawBefore(cam);
+		cam.applyMatrix(runtime_obj);
+		drawWireFrame(runtime_obj, DCNT_MODE4);
+		//m4_fill(CLR_RED);
+
+		VBlankIntrWait();
+		vid_flip();
+		
+		
 	}
 	return 0;
 }

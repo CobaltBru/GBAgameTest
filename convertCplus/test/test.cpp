@@ -1,4 +1,5 @@
 
+
 #include <iostream>
 #include <cmath>
 #include "fixed.hpp"
@@ -7,7 +8,7 @@
 
 fixed   sqrt(fixed f) {
     fixed   l = 0;
-    fixed   r = f + fixed::from(1);
+    fixed   r = f + 1;
     fixed   m;
 
     while(l.num != r.num - 1) {

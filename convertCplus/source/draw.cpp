@@ -2,33 +2,7 @@
 #include "Camera.hpp"
 #include <tonc.h>
 
-void drawWireFrame(t_obj &obj, int mode) // 와이어 프레임
-{
-    for (int i = 0; i < obj.i_size; i += 3)
-    {
-        int idx1 = obj.index[i];
-        int idx2 = obj.index[i + 1];
-        int idx3 = obj.index[i + 2];
-        switch (mode)
-        {
-        case DCNT_MODE5:
-            m5_line(obj.rest[idx1].x, obj.rest[idx1].y, obj.rest[idx2].x, obj.rest[idx2].y, CLR_WHITE);
-            m5_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx3].x, obj.rest[idx3].y, CLR_WHITE);
-            m5_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx1].x, obj.rest[idx1].y, CLR_WHITE);
-            break;
-        case DCNT_MODE4:
-            m3_line(obj.rest[idx1].x, obj.rest[idx1].y, obj.rest[idx2].x, obj.rest[idx2].y, CLR_WHITE);
-            m3_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx3].x, obj.rest[idx3].y, CLR_WHITE);
-            m3_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx1].x, obj.rest[idx1].y, CLR_WHITE);
-            break;
-        default:
-            m3_line(obj.rest[idx1].x, obj.rest[idx1].y, obj.rest[idx2].x, obj.rest[idx2].y, CLR_WHITE);
-            m3_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx3].x, obj.rest[idx3].y, CLR_WHITE);
-            m3_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx1].x, obj.rest[idx1].y, CLR_WHITE);
-            break;
-        }
-    }
-}
+
 
 void printNrestOBJ(t_obj &obj) // 투영 전 오브젝트 출력
 {
@@ -91,6 +65,40 @@ void printrestPoint(char *tag, int x, int y, fixed z)
     char s1[100];
     sprintf(s1, "%s:(%d,%d,%g)\n", tag, x, y, float(z));
     tte_write(s1);
+}
+
+
+void drawWireFrame(t_obj &obj, int mode) // 와이어 프레임
+{
+    for (int i = 0; i < obj.i_size; i += 3)
+    {
+        int idx1 = obj.index[i];
+        int idx2 = obj.index[i + 1];
+        int idx3 = obj.index[i + 2];
+        switch (mode)
+        {
+        case DCNT_MODE5:
+            m5_line(obj.rest[idx1].x, obj.rest[idx1].y, obj.rest[idx2].x, obj.rest[idx2].y, CLR_WHITE);
+            m5_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx3].x, obj.rest[idx3].y, CLR_WHITE);
+            m5_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx1].x, obj.rest[idx1].y, CLR_WHITE);
+            break;
+        case DCNT_MODE4:
+            m4_line(obj.rest[idx1].x, obj.rest[idx1].y, obj.rest[idx2].x, obj.rest[idx2].y, 1);
+            m4_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx3].x, obj.rest[idx3].y, 1);
+            m4_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx1].x, obj.rest[idx1].y, 1);
+            break;
+        case DCNT_MODE3:
+            m3_line(obj.rest[idx1].x, obj.rest[idx1].y, obj.rest[idx2].x, obj.rest[idx2].y, CLR_WHITE);
+            m3_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx3].x, obj.rest[idx3].y, CLR_WHITE);
+            m3_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx1].x, obj.rest[idx1].y, CLR_WHITE);
+            break;
+        default:
+            m4_line(obj.rest[idx1].x, obj.rest[idx1].y, obj.rest[idx2].x, obj.rest[idx2].y, CLR_WHITE);
+            m4_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx3].x, obj.rest[idx3].y, CLR_WHITE);
+            m4_line(obj.rest[idx2].x, obj.rest[idx2].y, obj.rest[idx1].x, obj.rest[idx1].y, CLR_WHITE);
+            break;
+        }
+    }
 }
 
 void drawBefore(Camera &cam) // 매 프레임마다  실행되어야함
