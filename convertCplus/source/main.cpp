@@ -29,8 +29,8 @@ void setMode0()
 void setMode4()
 {
 	REG_DISPCNT = DCNT_MODE4 | DCNT_BG2;
-	*(unsigned short*)(0x05000000) = CLR_BLACK;
-	*(unsigned short*)(0x05000016) = CLR_WHITE;
+	pal_bg_mem[0] = CLR_BLACK;
+	pal_bg_mem[1] = CLR_WHITE;
 
 	m4_fill(0);
 	//vid_flip();

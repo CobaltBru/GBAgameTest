@@ -99,6 +99,7 @@ void drawWireFrame(t_obj &obj, int mode) // 와이어 프레임
             break;
         }
     }
+    
 }
 
 void drawBefore(Camera &cam) // 매 프레임마다  실행되어야함
